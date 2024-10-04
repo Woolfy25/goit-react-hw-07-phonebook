@@ -1,17 +1,25 @@
-import PhonebookForm from './PhonebookForm/PhonebookForm';
-import Contacts from './Contacts/Contacts';
-import Filter from './FilterContacts/FilterContacts';
-
+import "./App.css";
+import Title from "./Title/Title";
+import Form from "./Form/Form";
+import Contacts from "./Contacts/Contacts";
+import { fetchContacts } from "../redux/operations";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
   return (
-    <div>
-      <h1 className="title">Phonebook</h1>
-      <PhonebookForm />
-      <h2 className="title">Contacts</h2>
-      <Filter />
+    <div className="App">
+      <Title title="Phonebook" />
+      <Form />
       <Contacts />
     </div>
   );
 };
+
 export default App;
