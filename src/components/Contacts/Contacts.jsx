@@ -1,29 +1,29 @@
-import css from "./Contacts.module.css";
-import { getContacts, getFilter } from "../../redux/contacts/selectors";
-import { useSelector } from "react-redux";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { deleteContact } from "../../redux/operations";
-import { setFilter } from "../../redux/filters/filterSlice";
+import css from './Contacts.module.css';
+import { getContacts, getFilter } from '../../redux/contacts/selectors';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { deleteContact } from '../../redux/operations';
+import { setFilter } from '../../redux/filters/filterSlice';
 
 const Contacts = () => {
-  const [filterState, setFilterState] = useState("");
+  const [filterState, setFilterState] = useState('');
 
   const dispatch = useDispatch();
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     const value = event.target.value;
     setFilterState(value);
     dispatch(setFilter(value));
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = id => {
     dispatch(deleteContact(id));
   };
 
   const getVisibleContacts = (contacts, filter) => {
-    const filterValue = filter ? filter.toLowerCase() : "";
-    return contacts.filter((contact) =>
+    const filterValue = filter ? filter.toLowerCase() : '';
+    return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filterValue)
     );
   };
@@ -45,10 +45,15 @@ const Contacts = () => {
         />
       </div>
       <ul className={css.contactsList}>
-        {visibleContacts.map((contact) => (
-          <li key={contact.id}>
+        {visibleContacts.map(contact => (
+          <li key={contact.id} className={css.contactsElement}>
             {contact.name}: {contact.phone}
-            <button onClick={() => handleDelete(contact.id)}>Delete</button>
+            <button
+              onClick={() => handleDelete(contact.id)}
+              className={css.contactDelete}
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
